@@ -1,0 +1,107 @@
+===============================================================================
+Header:
+===============================================================================
+
+README for pcp_volume by pcppopper (da.box@home.se) (http://www.pcppopper.org/)
+(find me in #winprog or #winprog.se on EFNet)
+
+this module deals with windows volume controlling system. it is losely..em..loosely
+based on v_bang.dll by blackhawk. i desided to do a rewrite of itsince i only have
+32 megs of ram so every kb counts, (v_bang.dll = 22.016b, pcp_vol.dll = 5.632b).
+(Note on the sizes: v_bang.dll is packed using the upx .exe packer which makes
+it more than half the original size. pcp_vol.dll uses some compiler optimizations
+to get it's small size. the .text and .reloc sections are merged with the .data
+section which makes it a bit smaller.) blackhawk has later released a v_bang_lite
+which is about 15.000b. Good job blackhawk =).
+
+===============================================================================
+Bangs:
+===============================================================================
+
+!Volume_Mute [line] - toggle sound. default line is 0 (Volume Control)
+!Volume_Up [line] - louder. default line is 0 (Volume Control)
+!Volume_Down [line] - softer. default line is 0 (Volume Control)
+!Volume_Sound_On [line] - turn on sound. default line is 0 (Volume Control)
+!Volume_Sound_Off [line] - turn off sound. default line is 0 (Volume Control)
+
+===============================================================================
+Variables:
+===============================================================================
+
+VolumeStepWidth <number>
+
+sets the amount !Volume_Up/!Volume_Down increases/decreases the volume level
+by.
+Default is 6.
+
+VolumeIgnoreBalance
+
+is used as a boolean value to determine whether to adjust the volume with
+respect to channel balance or not. If this is put in your .rc it means that
+both the right and left channels will be equal.
+Default is off.
+(obviously, or it would have been called VolumeTakeBalanceIntoAccount or
+something equally dumb).
+
+Examples:
+
+VolumeStepWidth 2
+VolumeIgnoreBalance
+*Hotkey Win+Z !Volume_Mute 0
+*Hotkey Win+Up !Volume_Up 0
+*Hotkey Win+Down !Volume_Down 0
+*Hotkey Win+C !Volume_Sound_Off 0
+*Hotkey Win+D !Volume_Sound_On 0
+
+===============================================================================
+Updates:
+===============================================================================
+
+0.0:
+
+Obviously nothing, (after all this was the first release).
+
+0.1:
+
+Fixed a bug that would wrap the volume if you went really quiet (beyond 0 that
+is), darn DWORD's...can never trust them...thanks to Ryan Graffy for spotting
+this. He also spotted a problem with the balance being thrown off at times.
+I have only managed to reproduce this under one scenario. Go way low, i.e. 0,
+and then rapidly increase the volume (hold down a hotkey combination for
+raising the volume. The balance will be to the far left. This behavior is
+completely inexplicable.
+Fixed? an issue with crashing on quitModule. It has never crashed on my system,
+but jesterace reported that it did on his. All i can see was that i wasn't
+checking for NULL values before free():ing some variables, but that shouldn't
+make quitModule go...haywire (heh...what a stupid word). Anyhow, if problems
+persist in this updated version, please report them and if i can't spot any
+bugs i'll be forced to release the source so others can have a go =).
+
+0.2:
+
+Rewrote most of the module making quite a lot of code more efficient and
+generic. The size of the code was almost halved, but sadly msvc didn't really
+adjust the compiled size accordingly =\. Managed to scale off 512 bytes, but
+there is still a lot of stupid padding in the final .dll =\. Added the variable
+VolumeIgnoreBalance. Adding it to your .rc makes pcp_vol ignore the current
+balance between the left and right channels while adjusting it in !Volume_Up
+and !Volume_Down. This can be very useful for people who have had problems with
+the balance being thrown off at times. I promptly added it to my .rc, not
+because i've been having problems with the balance but rather that i find
+messing with the balance quite redundant and if something messes with it i can
+easily reset it to centered with a quick !Volume_Up/!Volume_Down combo (i.e.
+retaining the volume but making sure the balance is centered). Also fixed loads
+of bugs in this README (had !Hotkey instead of *Hotkey..(i'm a dork)...also
+changed the way a line is referred to from 'channel' to 'line' also fixed the
+Jester? bug...it was supposed to be jesterace of course (sorry)).
+
+0.3
+
+Fixed a lot of bugs in this readme. Notoriously the v_bang bashing bug (sorry,
+i didn't mean any harm.) and the bug that prevented channels to be specified
+correctly.
+
+0.4
+
+Added !Volume_Sound_On and !Volume_Sound_Off. Someone requested this feature
+so one can bind one key to turn off sound and another to turn it back on.

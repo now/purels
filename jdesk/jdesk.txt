@@ -1,0 +1,486 @@
+===================================================
+===================================================
+== jDesk.dll - an advanced desktop for LiteStep ===
+===================================================
+===================================================
+====== Written by: ================================
+================== Chris Rempel (jugg) ============
+===================================================
+================== http://jugg.logicpd.com/ =======
+===================================================
+===================================================
+= Version: 0.61 = Release Date: 00.02.02 ==========
+===================================================
+===================================================
+
+-=ToC=-
+I. Introduction
+II. Installation
+III. Information
+ A} Commands
+ B} Changes
+IV. Tips & Tricks
+V. Disclaimer
+
+
+=====================
+== I. Introduction ==
+=====================
+===================================================
+
+Welcome, and thank you for deciding to try out this
+enhanced Desktop replacement module for LiteStep.
+jDesk features improved performance, stability, and
+customization over the Desktop that comes with
+LiteStep. For example, jDesk can execute programs,
+LiteStep action (bang) commands, and combinations
+of any number of commands from a single mouse
+click, or mouse/keyboard combination. Also, jDesk
+can set your intial Work Area (amount of screen
+realestate that a maximized window covers) as well
+as changing the Work Area on the fly.
+
+
+=====================
+== II. Istallation ==
+=====================
+===================================================
+
+Extract "jDesk.dll" to your LiteStep directory
+(c:\litestep\). Open up your step.rc (LiteStep
+configuration file) and find the section where all
+of your "LoadModule" lines are located. Remove or
+comment out (using a semicolon) the "LoadModule"
+line that contains "desktop.dll". Now, add a new
+line that looks like this:
+
+LoadModule c:\litestep\jdesk.dll
+
+Of course, adjust the path as necessary. Save your
+step.rc and issue the LiteStep Recycle command
+(!Recycle).
+
+NOTE 1: You MUST have a CVS (Dev) build dated
+99.08.25 or later, even LiteStep 0.24.5 is NOT
+recent enough, as jDesk 0.50+ requires new
+functionality in the lsapi.dll. You can get this
+from http://floach.pimpin.net/lsdev/
+
+NOTE 2: jDesk does not contain a TaskBar or System
+Tray. You will need to utilize a specific LiteStep
+Module for those features. Please read the section
+"IV. Tips & Tricks" for more information.
+
+
+======================
+== III. Information ==
+======================
+===================================================
+= A} Commands =
+===============
+
+    jDeskWorkArea l,r,t,b
+    =====================
+
+Sets the initial Work Area (amount of screen
+realestate that a maximized window covers) of your
+Desktop. It takes four parameters seperated by
+commas as integers (negative or positive). Opposite
+sides must have a difference greater then 200.
+
+ l = left side of Work Area.
+ r = right side of Work Area.
+ t = top side of Work Area.
+ b = bottom side of Work Area.
+
+An example would be:
+
+ jDeskWorkArea 0,600,0,400  
+
+Defaults to:
+
+ jDeskWorkArea 0,0,0,0
+ (full screen)
+
+===================================================
+
+    jDeskDisableMButton3
+    ====================
+
+If set, it will disable all MouseButton 3 (middle
+mouse button) functionality. If you have a 3 button
+mouse, and you are having trouble using jDesk, try
+setting this command. Sometimes special mouse
+drivers have conflicts.
+
+===================================================
+
+    jDeskDesktopFolder "x:\path to\desktop"
+    =======================================
+
+If used and set to a valid directory, it will
+enable drag and drop of files onto the jDesk
+desktop area. Any file dropped on the desktop will
+be automatically copied into the folder specified.
+If the file exists, you will be prompted to
+overwrite. You can not move files, or create
+shortcuts. Currently dragging folders do not work.
+
+Defaults to:
+
+ No default. If not specified, Drag & Drop is
+ not enabled.
+
+===================================================
+
+    jDeskMButton1 ["command down"]["command up"]
+    ============================================
+
+This sets the functionality of your first mouse
+button. It takes two parameters, which can be a
+single or multiple commands each. Each command
+(up/down) functions exactly like other modules and
+supports $E-Vars$ (see the LiteStep docs for an
+explanation). Be sure to use Quotation marks around
+LFN (long file names) and use a single space to
+seperate multiple LiteStep action (bang) commands.
+
+ command down = some program, folder, or LiteStep
+                action to be executed when the
+                mouse button is pressed.
+ command up   = someprogram, folder, or LiteStep
+                action to be executed when the
+                mouse button is depressed.
+
+An example would be:
+
+  jDeskMButton1 ["!MinimizeAll"]["!TasksShow"]
+
+or
+
+  jDeskMButton1 ["!jDeskSetWorkArea" 0,-64,0,0]["!ToggleWharf"]
+
+Defaults to:
+
+  jDeskMButton1 ["!None"]["!None"]
+
+---------------------------------------------------
+
+    jDeskMButton2 ["command down"]["command up"]
+    ============================================
+
+This sets the functionality of your second mouse
+button.
+
+Defaults to:
+
+  jDeskMButton2 ["!None"]["!None"]
+
+---------------------------------------------------
+
+    jDeskMButton3 ["command down"]["command up"]
+    ============================================
+
+This sets the functionality of your third mouse
+button.
+
+Defaults to:
+
+  jDeskMButton3 ["!None"]["!None"]
+
+---------------------------------------------------
+
+    jDeskCtrlMButton1 ["command down"]["command up"]
+    ================================================
+
+This sets the functionality of your first mouse
+button when holding the "Ctrl" key down.
+
+Defaults to:
+
+  jDeskCtrlMButton1 ["!None"]["!None"]
+
+---------------------------------------------------
+
+    jDeskCtrlMButton1 ["command down"]["command up"]
+    ================================================
+
+This sets the functionality of your second mouse
+button when holding the "Ctrl" key down.
+
+Defaults to:
+
+  jDeskCtrlMButton2 ["!None"]["!None"]
+
+---------------------------------------------------
+
+    jDeskCtrlMButton1 ["command down"]["command up"]
+    ================================================
+
+This sets the functionality of your third mouse
+button when holding the "Ctrl" key down.
+
+Defaults to:
+
+  jDeskCtrlMButton3 ["!None"]["!None"]
+
+---------------------------------------------------
+
+    jDeskShiftMButton1 ["command down"]["command up"]
+    =================================================
+
+This sets the functionality of your first mouse
+button when holding the "Shift" key down.
+
+Defaults to:
+
+  jDeskShiftMButton1 ["!None"]["!None"]
+
+---------------------------------------------------
+
+    jDeskShiftMButton2 ["command down"]["command up"]
+    =================================================
+
+This sets the functionality of your second mouse
+button when holding the "Shift" key down.
+
+Defaults to:
+
+  jDeskShiftMButton2 ["!None"]["!None"]
+
+---------------------------------------------------
+
+    jDeskShiftMButton3 ["command down"]["command up"]
+    =================================================
+
+This sets the functionality of your third mouse
+button when holding the "Shift" key down.
+
+Defaults to:
+
+  jDeskShiftMButton3 ["!None"]["!None"]
+
+===================================================
+
+    !jDeskSetWorkArea n,n,n,n
+    =========================
+
+Sets the Work Area (amount of screen realestate
+that a maximized window covers) of your Desktop on
+the fly. It takes four parameters seperated by
+commas as integers (negative or positive). Opposite
+sides must have a difference greater then 200.
+
+ l = left side of Work Area.
+ r = right side of Work Area.
+ t = top side of Work Area.
+ b = bottom side of Work Area.
+
+An example would be:
+
+ !jDeskSetWorkArea 0,600,0,400  
+
+Defaults to:
+
+ No Default, if no parameters are specified it does
+ not change the WorkArea.
+
+===================================================
+
+    !jDeskResetWorkArea
+    ===================
+
+Resets the WorkArea (amount of screen realestate
+that a maximized window covers) of your Desktop on
+to the initial values specified by "jDeskWorkArea".
+
+
+===================================================
+= B} Changes =
+==============
+
+- 0.61 -
+--------
+
+  ! Fixed background refresh problems.
+  ! Fixed desktop window from not resizing when the
+    screen resolution is changed.
+  ! Fixed WorkArea from not updating when the
+    screen rosolution is changed.
+
+- 0.60 -
+--------
+
+  + Added jDeskDesktopFolder (drag & drop) command.
+
+  - Removed "jDeskSwapMButtons" (too much extra
+    code, just change your commands instead).
+
+  * Changed the mouse button configuration. Now
+    both Down and Up commands are on the same line
+    seperated by brackets [].
+
+  * Changed the way the desktop background/ refresh
+    is handled. Using WS_EX_TRANSPARENT now.
+
+- 0.51 -
+--------
+  ! Fixed "jDeskSwapMButtons" bug that made it not
+    work.
+
+- 0.50 -
+--------
+  + Added the ability to assign functionality to
+    _both_ mouse UP and mouse DOWN events.
+
+  + Added the ability to swap First and Second
+    mouse buttons
+
+  + Added ability to disable the Third (middle)
+    mouse button.
+
+  - Removed obsolete commands
+
+  * Changed the way programs/commands are executed.
+    It now conforms to the LiteStep standards.
+
+  * Improved performance of the !jDeskSetWorkArea
+    and !jDeskResetWorkArea actions.
+
+  ! Fixed bug when changing resolutions the DeskTop
+    window did not resize to the new screen size.
+
+  ! Fixed bug that messed up the WorkArea when
+    putting quotation marks around the
+    !jDeskSetWorkArea parameters.
+
+  ! Fixed bug when not using the "jDeskWorkArea"
+    command, and then using the combination of
+    "!jDeskWorkArea" and "!jDeskResetWorkArea"
+    action commands, it would set the WorkArea to
+    the hardcoded settings.
+
+- 0.40 -
+--------
+  + Added the ability to specify executing events
+    on mouse DOWN or mouse UP.
+
+  + Added ability to execute programs, folders
+    and the like, and not just LS actions (bangs).
+
+  + Added ability to allow parameters to be passed
+    to a program or LS Action command.
+
+  + Added ability to execute different events
+    depending if the SHIFT or CTRL key is held down.
+
+  + Added !jDeskSetWorkArea and !jDeskResetWorkArea.
+
+  * Changed all of the step.rc command format.
+
+  * Several other misc changes/ fixes
+
+- 0.30 -
+--------
+  + Initial release. Supports running single LS
+    action commands for each mouse button, and
+    defining application Work Area (DesktopArea).
+
+
+=====================
+= IV. Tips & Tricks =
+=====================
+===================================================
+
+---------------------------------------------------
+- If you want to have a System Tray, download
+"systray.dll", created by Maduin, from
+http://maduin.dasoft.org/  This is a fully featured
+skinnable System Tray that can be placed anywhere
+on your Desktop.
+
+---------------------------------------------------
+- If you want a Task Manager to have access to your
+currently running applications you can use
+"tasks.dll" available from
+http://aster.omega2.com/jugg/software/
+
+Or you can get "traytasks.dll", created by Sergey
+Trofimov (requires "systray.dll" to run with jDesk,
+and there are some incompatibilities currently that
+are being fixed.) TrayTasks is available from
+http://www.tv4studios.com/st/litestep/modules.html
+
+There are other alternatives including several
+Task Managers for the Wharf and Popups.
+
+---------------------------------------------------
+- If you want to have AutoRun capabilities you need
+to get "autorun.dll", created by Visigoth, from
+http://visigoth.litestep.com/
+
+---------------------------------------------------
+- If you are having trouble with "application bars"
+showing up along the bottom of your screen when you
+minimize an application, this is because you need
+to get a Task Manager that supports hiding
+Minimized Application Bars. If you are running
+"tasks.dll" you can hide those bars by adding the
+command "TasksHideMinAppBar".
+
+---------------------------------------------------
+- If you are having trouble with jDesk and use a 3
+button mouse, open up your mouse configuration
+panel, and assign the middle mouse button to
+function as a normal middle mouse button.
+Otherwise, if you want your middle mouse button to
+perform special functions that your mouse driver/
+software provides, set the "jDeskDisableMButton3"
+command in your "step.rc" file.
+
+---------------------------------------------------
+- If you are running Windows NT, and you change the
+Left side of the WorkArea from zero "0" to any
+other value, it may mess up the rest of the
+settings. This is not a jDesk specific bug. All
+modules that use SystemParametersInfo/
+SPI_SETWORKAREA functionality has this problem. A
+solution is being looked into.
+
+---------------------------------------------------
+- You can run multiple programs as well as multiple
+actions from the same mouse event. The following is
+an example that will maximize the Desktop WorkArea
+and then run your DOS Prompt:
+
+  jDeskMButton1 [""][!jDeskSetWorkArea 0,0,0,0 !Execute %comspec%]
+
+or here is one that will run notepad.exe and then
+open the About dialog and then open the Popup Menu:
+
+  jDeskMButton1 [""][!Execute notepad.exe !About !Popup]
+
+---------------------------------------------------
+- If you are using the Wharf with jDesk, and you
+do not want the Wharf to resize the WorkArea when
+it docks to the side of the screen add the command
+"SetDesktopArea" to your "step.rc" file.
+
+
+=================
+= V. Disclaimer =
+=================
+===================================================
+
+Copyright (C) 1999, Chris Rempel
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT  WARRANTY
+OF ANY KIND, EXPRESS OR  IMPLIED, INCLUDING BUT NOT
+LIMITED  TO  THE   WARRANTIES  OF  MERCHANTABILITY,
+FITNESS  FOR   A   PARTICULAR   PURPOSE   AND  NON-
+INFRINGEMENT.  IN  NO  EVENT  SHALL THE  AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,  DAMAGES
+OR  OTHER  LIABILITY,   WHETHER  IN  AN  ACTION  OF
+CONTRACT,  TORT OR OTHERWISE,  ARISING FROM, OUT OF
+OR IN CONNECTION  WITH  THE  SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.

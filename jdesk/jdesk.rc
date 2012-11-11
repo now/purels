@@ -1,0 +1,26 @@
+jDeskWorkArea 0,0,0,0
+jDeskDisableMButton3
+jDeskSwapMButtons
+
+jDeskMButton1Down !None
+jDeskMButton2Down !None
+jDeskMButton3Down !None
+jDeskCtrlMButton1Down !None
+jDeskCtrlMButton2Down !None
+jDeskCtrlMButton3Down !None
+jDeskShiftMButton1Down !None
+jDeskShiftMButton2Down !None
+jDeskShiftMbutton3Down !None
+
+jDeskMButton1Up !None
+jDeskMButton2Up !None
+jDeskMbutton3Up !None
+jDeskCtrlMButton1Up !None
+jDeskCtrlMButton2Up !None
+jDeskCtrlMbutton3Up !None
+jDeskShiftMButton1Up !None
+jDeskShiftMButton2Up !None
+jDeskShiftMbutton3Up !None
+
+;!jDeskSetWorkArea 0,0,0,0
+;!jDeskResetWorkArea
